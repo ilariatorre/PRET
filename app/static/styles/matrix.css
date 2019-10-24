@@ -1,0 +1,75 @@
+
+.background {
+    fill: #eee;
+}
+
+line {
+    stroke: #fff;
+}
+
+text.active {
+    fill: red;
+}
+
+
+div.container {
+    overflow: scroll;
+    max-width: -webkit-fill-available;
+    max-height: -webkit-fill-available;
+    font: 10px sans-serif;
+    background-color: rgb(255,255,255,0.9);
+    padding: 15px;
+    margin:3rem;
+    border-radius:4px;
+}
+svg {
+
+    width: fit-content;
+    height: auto;
+    
+}
+
+.axis path, .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+
+
+.filters label {
+    display:inline-block;
+    width:60px
+}
+
+.filters order {
+    display:inline-block;
+    position:relative;
+    width:120px;
+    bottom:2px;
+    margin-bottom:4px
+}
+
+/*
+
+sup, sub {
+    line-height: 0;
+}
+
+q:before {
+    content: "“";
+}
+
+q:after {
+    content: "”";
+}
+
+blockquote q {
+    line-height: 1.5em;
+    display: inline;
+}
+
+blockquote q:before,
+blockquote q:after {
+    content: "";
+}

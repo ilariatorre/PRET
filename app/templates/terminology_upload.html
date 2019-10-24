@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/annotation.css') }}">
+<body style="background-image: url('../static/images/wallpaper.jpeg');background-attachment:fixed;background-repeat:no-repeat"></body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+          <div class="card card-signin my-5" style="background-color:rgb(255,255,255,0.9)">
+            <div class="card-body">
+                <h5 class="card-title text-center">Select a text in the form of a list of word</h5>
+                  <div class="form-group">
+                      {{ wtf.quick_form(form, button_map={'submit': 'primary'}) }}
+                  </div>
+            </div>
+        </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>   
+{% endblock %}

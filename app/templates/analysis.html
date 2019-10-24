@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+<body style="background-image: url('../static/images/wallpaper.jpeg');background-attachment:fixed;background-repeat:no-repeat"></body>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+              <div class="card card-signin my-5" style="background-color:rgb(255,255,255,0.9)">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Select an annotation or a method and the type of analysis</h5>
+                      <div class="form-group">
+                        {{ wtf.quick_form(form, button_map={'submit': 'primary'}) }}
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        
+        <script type="text/javascript">
+            let book_select = document.getElementById('book_cap')
+            let analysis_select = document.getElementById('analysis_type')
+            let annotation_select1 = document.getElementById('annotation_1')
+            let annotation_select2 = document.getElementById('annotation_2')
+            
+            annotation_select2.disabled=true;
+        
+            book_select.onchange = function() {
+                
+                book_cap = book_select.value;
+                fetch('/analysis/' + book_cap).then(function(response) {
+                    response.json().then(function(data) {
+                         
+                        let optionHTML = '';
+                        
+                        data.annotation.forEach(function(annotation){
+                        console.log(annotation.id)
+                            optionHTML += '<option value="' + annotation.id + '">' + annotation.name + '</option>';
+                        })
+                        annotation_select1.innerHTML = optionHTML;
+                        annotation_select2.innerHTML = optionHTML;
+                    });
+                });
+            }
+            
+            analysis_select.onchange = function() {
+            
+            if (analysis_select.value == '3') {
+                annotation_select2.disabled=false;
+            } else {
+                annotation_select2.disabled=true;
+            }   
+           
+            }
+        </script>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container" style="background-color: rgb(255,255,255,0.9);margin-top:3rem;border-radius:4px;padding:15px;margin-bottom:3rem">
+
+    <body style="background-image: url('../static/images/wallpaper.jpeg');background-attachment:fixed;background-repeat:no-repeat"></body>
+    <h1>Agreement:</h1>
+    <br>
+    <table class="table table-bordered">
+        <tr>
+            <th scope="row">Annotator 1:</th>
+            <td>{{ rel1 }}</td>
+        </tr>
+        
+        <tr>
+            <th scope="row">Annotator 2:</th>
+            <td>{{ rel2 }}</td>
+        </tr>
+        
+        <tr>
+            <th scope="row">Number of relations annotated by Annotator1 and Annotator2:</th>
+            <td>{{ file["allAgree"]|tojson }}</td>
+        </tr>
+        
+        <tr>
+            <th scope="row">Number of relations annotated by Annotator1</th>
+            <td>{{ file["rel1"]|tojson }}</td>
+        </tr>
+        
+        <tr>
+            <th scope="row">Number of relations annotated by Annotator2</th>
+            <td>{{ file["rel2"]|tojson }}</td>
+        </tr>
+        
+        <tr>
+            <th scope="row">number of relations never annotated</th>
+            <td>{{ file["allDisag"]|tojson }}</td>
+        </tr>
+        
+        <tr>
+            <th scope="row">Cohen's kappa value:</th>
+            <td>{{ file["kappa"]|tojson }}</td>
+        </tr>
+    </table>
+    
+</div>
+{% endblock %}

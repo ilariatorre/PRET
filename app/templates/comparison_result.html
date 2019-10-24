@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container" style="background-color: rgb(255,255,255,0.9);margin-top:3rem;border-radius:4px;padding:15px;margin-bottom:3rem">
+
+    <body style="background-image: url('../static/images/wallpaper.jpeg');background-attachment:fixed;background-repeat:no-repeat"></body>
+    <table class="table table-bordered" style="text-align:center">
+        
+        <tr>
+            <td style="font-weight:bold">Text1</td>
+            <th scope="row"></th>
+            <td style="font-weight:bold">Text2</td>      
+        </tr>
+        
+        <tr>
+            <td>{{ file1['sentences']|tojson }}</td>
+            <th scope="row">Text Length (sentences)</th>
+            <td>{{ file2['sentences']|tojson }}</td>      
+        </tr>
+        
+        <tr>
+            <td>{{ file1['tokens']|tojson }}</td>
+            <th scope="row">Text Length (tokens)</th>
+            <td>{{ file2['tokens']|tojson }}</td>
+        </tr>
+        
+        <tr>
+            <td>{{ file1['links']|tojson }}</td>
+            <th scope="row">Number of relations</th>
+            <td>{{ file2['links']|tojson }}</td>
+        </tr>
+        
+        <tr>
+            <td>{% if file1['unique relations'] is defined %}
+                 {{ file1['unique relations']|tojson }}
+             {% else %}
+                 aaa
+            {% endif %}</td>
+            <th scope="row">Number of unique relations</th>
+            <td>{% if file2['unique relations'] is defined %}
+                 {{ file2['unique relations']|tojson }}
+             {% else %}
+                 aaa
+            {% endif %}</td>
+        </tr>
+        
+        <tr>
+            <td>{% if file1['strong relations'] is defined %}
+                 {{ file1['strong relations']|tojson }}
+             {% else %}
+                 aaa
+            {% endif %}</td>
+            <th scope="row">Number of strong relations</th>
+            <td>{% if file2['strong relations'] is defined %}
+                 {{ file2['strong relations']|tojson }}
+             {% else %}
+                 aaa
+            {% endif %}</td>
+        </tr>
+        
+        <tr>
+            <td>{% if file1['weak relations'] is defined %}
+                 {{ file1['weak relations']|tojson }}
+             {% else %}
+                 aaa
+            {% endif %}</td>
+            <th scope="row">Number of weak relations</th>
+            <td>{% if file2['weak relations'] is defined %}
+                 {{ file2['weak relations']|tojson }}
+             {% else %}
+                 aaa
+            {% endif %}</td>
+        </tr>
+        
+        <tr>
+            <td>{% if file1['default concepts'] is defined %}
+                 {{ file1['default concepts']|tojson }}
+             {% else %}
+                 aaa
+            {% endif %}</td>
+            <th scope="row">Number of default concepts</th>
+            <td>{% if file2['default concepts'] is defined %}
+                 {{ file2['default concepts']|tojson }}
+             {% else %}
+                 aaa
+            {% endif %}</td>
+        </tr>
+        
+        <tr>
+            <td>{% if file1['entered concepts'] is defined %}
+                 {{ file1['entered concepts']|tojson }}
+             {% else %}
+                 aaa
+            {% endif %}</td>
+            <th scope="row">Number of concepts entered</th>
+            <td>{% if file2['entered concepts'] is defined %}
+                 {{ file2['entered concepts']|tojson }}
+             {% else %}
+                 aaa
+            {% endif %}</td>
+        </tr>
+        
+        <tr>
+            <td>{{ file1['transitive']|tojson }}</td>
+            <th scope="row">Number of transitive relations</th>
+            <td>{{ file2['transitive']|tojson }}</td>
+        </tr>
+        
+        <tr>
+            <td>{{ file1['loops']|tojson }}</td>
+            <th scope="row">Number of cycles</th>
+            <td>{{ file2['loops']|tojson }}</td>
+        </tr>
+        
+        <tr>
+            <td>{{ file1['diameter']|tojson }}</td>
+            <th scope="row">Diameter</th>
+            <td>{{ file2['diameter']|tojson }}</td>
+        </tr>
+        
+        <tr>
+            <td>name of the concept:{{ file1['max out degree'][0]|tojson }} #: {{ file1['max out degree'][1]|tojson }}</td>
+            <th scope="row">Max number of outgoing arcs</th>
+            <td>name of the concept:{{ file2['max out degree'][0]|tojson }} #: {{ file2['max out degree'][1]|tojson }}</td>
+        </tr>
+        
+        <tr>
+            <td>name of the concept:{{ file1['max in degree'][0]|tojson }} #: {{ file1['max in degree'][1]|tojson }}</td>
+            <th scope="row">Max number of incoming arcs</th>
+            <td>name of the concept:{{ file2['max in degree'][0]|tojson }} #: {{ file2['max in degree'][1]|tojson }}</td>
+        </tr>
+        
+        <tr>
+            <td>aaa</td>
+            <th scope="row">Longest path</th>
+            <td>aaa</td>
+        </tr>
+        
+        <tr>
+            <td>{{ file1['leaves']|tojson }}</td>
+            <th scope="row">Number of leaves</th>
+            <td>{{ file2['leaves']|tojson }}</td>
+        </tr>
+        
+        <tr>
+            <td>aaa</td>
+            <th scope="row">Number of roots</th>
+            <td>aaa</td>
+        </tr>
+    </table>
+    
+</div>
+{% endblock %}

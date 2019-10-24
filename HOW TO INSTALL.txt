@@ -9,5 +9,5 @@ To run the website you have to create a virtual environment:
 	- Now that you have a virtual environment you can install all the packages required through:
 		pip install -r requirements.txt
 	
-	- To start the website insert: flask run 
+	- To start the website insert (with the virtual environment activated): flask run 
 	- Now you can open your browser on http://127.0.0.1:5000/

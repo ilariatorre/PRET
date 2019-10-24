@@ -1,0 +1,43 @@
+{% block content %}
+   <!-- <title>Guidelines for annotators</title> -->
+    
+    <body style="background-image: url('../static/images/wallpaper.jpeg');background-attachment:fixed;background-repeat:no-repeat"></body>
+    <div class="container" style="background-color: rgb(255,255,255,0.9);margin-top:3rem;border-radius:4px;max-width: 1135px;margin-bottom:3rem;padding:15px">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+        <header class="page-header">
+            <h1>Guidelines for annotators</h1>
+        </header>
+
+
+        <p>
+            <ol>
+                <li>Read the text and for each term included in D, identify its prerequisite terms in D.  Relazioni ridondanti non vengono aggiunti [t appartiene a D o T2K]</li>
+                <li>The annotation focus is the pair of two distinct terms.</li>
+                <li>Annotate the presence of the prerequisite relation, not its absence.</li>
+                <li>"Trust the text": consider only terms and relations extracted from D.</li>
+                <li>Do not annotate self-prerequisites.[violets the irreflective property]</li>
+                <li>Do not enter cycles in the annotation (i.e. concept A is a prerequisite of concept B, concept B of concept C and concept C happens to be prerequisite of concept A, creating a loop).</li>
+                <li>Per ogni relazione viene salvata e la quadrupla (numero frase, concetto X in quella frase, concetto Y prerequisito di X, peso della relazione*). I valori del peso possono essere {ALTO, BASSO}*. Quindi è possibile anche ri-annotare la stessa copia di concetti con un peso diverso in un’altra frase.</li>
+                <li>Cancellare una relazione vuol dire cancellare la quadrupla</li>
+                <li>Il peso di una relazione potrebbe essere modificato.</li>
+            </ol>
+            *Interpretazione del peso: Alto = necessario; Basso = utile ma non necessario
+        <p>
+
+        <h2>Domande</h2>
+        <p>
+            <ol>
+                <li>Quali sono i concetti necessari per capire il significato di questo concetto?</li>
+                <li>Quali sono i concetti utilizzati nella definizione di questo concetto?</li>
+                <li>Ci sono concetti nel testo che segue (contesto immediatamente seguente, e.g. paragrafo) che aiutano a capire questo concetto?</li>
+                <li>Questo concetto  costituisce un caso particolare di un concetto già presente nel testo (o nel contesto immediatamente seguente)? Se si quale.</li>
+                <li>Questo concetto costituisce una parte di un altro concetto già presente nel testo? Se si quale? Il gomito è una parte del braccio</li>
+                <li>Questo concetto è costituito da parti già descritte precedentemente? Se si quali? Il braccio è composto da gomito ed etc.</li>
+                <li>Questo concetto è conseguenza di un altro precedentemente descritto? Se si quale.</li>
+                <li>Questo concetto è la causa di un altro concetto precedentemente descritto? Se si quale.</li>
+            </ol>
+            Le regole 5 e 6 dipendono dalla scelta dell’autore di spiegare un concetto top-down bottom-up
+            Le regole 7 e 8 sono relazioni di causa - effetto quale direzione dipendono dalla scelta dell’autore di spiegare un concetto top-down bottom-up
+        <p>
+    </div>
+{% endblock %}
