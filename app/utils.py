@@ -61,7 +61,7 @@ def conll_to_text0(conll, start):
     return(check)
         
 def conll_to_text1(conll, start, end):
-     """ From conll format to string with an index for starting and ending """
+    """ From conll format to string with an index for starting and ending """
     sentence = parse(conll)
     check = ""
     for phrase in sentence[start:end]:
@@ -121,6 +121,7 @@ def data_analysis(conll, words, sentences, bid, cap, method):
     df = pd.DataFrame(columns=['ID', 'name', 'frequence', 'sections', 'sentence', 'subsidiaries'])  
     dfAnnotation = pd.DataFrame(columns=['prerequisites', 'subsidiaries'])
     metrics = {}
+    tokens = 0
     text = ""
     sentPhrase = ""
     sent = []
@@ -129,6 +130,7 @@ def data_analysis(conll, words, sentences, bid, cap, method):
     subsidiaries = []
     sentence = parse(conll)
     metrics['default concepts'] = len(words)
+    
     
     # Add manual added concept if manual annotation
     if method not in ["1", "2", "3"]:
@@ -153,12 +155,13 @@ def data_analysis(conll, words, sentences, bid, cap, method):
     # Prepare sentence and text
     for ids, phrase in enumerate(sentence):
         for word in phrase:
+            tokens += 1
             text += lemmatizer.lemmatize(word["form"]) + " "
             sentPhrase += lemmatizer.lemmatize(word["form"]) + " "
         sent.append(sentPhrase)
         sentPhrase = ""
       
-    metrics['tokens'] = len(words)
+    metrics['tokens'] = tokens
     metrics['sentences'] = len(sentence)
     metrics['strong relations'] = 0
     metrics['weak relations'] = 0
@@ -302,6 +305,7 @@ def process_for_matrix_gold(dfAnnotation, df, method, words):
     uids = goldStandard.query.filter_by(gid=method.split(".")[1]).first().uids
     listaUids = uids.split(" ")
     listaUids = [uid for uid in listaUids if uid]
+    print(words)
     
     dfMatrix = pd.DataFrame(index = [name for name in words], columns = [name for name in words])
     dfMatrix = dfMatrix.fillna(0)
@@ -436,6 +440,7 @@ def create_dfAnnotation(bid, cap, gid, conll, words):
     metrics['unique relations'] = []
     sentence = parse(conll)
     metrics['default concepts'] = len(words)
+    tokens = 0 
     gold_standard = goldStandard.query.filter_by(gid=gid.split(".")[1]).first().gold
     uids = goldStandard.query.filter_by(gid=gid.split(".")[1]).first().uids
     listaUids = uids.split(" ")
@@ -443,6 +448,7 @@ def create_dfAnnotation(bid, cap, gid, conll, words):
         
     
     df = pd.read_csv(pd.compat.StringIO(gold_standard))    
+    print(df.name)
     new_words = set([])
     dfAnnotation = pd.DataFrame(columns=['prerequisites', 'subsidiaries'])
     for index, row in df.iterrows():
@@ -455,7 +461,7 @@ def create_dfAnnotation(bid, cap, gid, conll, words):
                     dfAnnotation = dfAnnotation.append(row, ignore_index=True)
             except:
                 continue
-            
+    
     for row in dfAnnotation.itertuples():
         lemma1 = find_term(row.subsidiaries)
         if type(lemma1) == int:
@@ -466,8 +472,8 @@ def create_dfAnnotation(bid, cap, gid, conll, words):
         if type(lemma2) == int:
             term = Terminology_reference.query.filter_by(tid=lemma2, cap=cap, bid=bid).first()
             if not term:
-                lemma2 = word.upper()
-                    
+                lemma2 = row.prerequisites.upper()
+        
         aids = Annotations.query.filter_by(lemma1=lemma1, lemma2=lemma2, bid=bid, cap=cap).all()
         for uid in listaUids:
             for aid in aids:
@@ -480,19 +486,26 @@ def create_dfAnnotation(bid, cap, gid, conll, words):
                         metrics['strong relations'] += 1
                     if (row.subsidiaries, row.prerequisites) not in metrics["unique relations"]:
                         metrics["unique relations"].append((row.subsidiaries, row.prerequisites))
-                    try:
-                        int(aid.lemma1)
-                    except ValueError:
-                        new_words.add(aid.lemma1.lower())
-                    try:
-                        int(aid.lemma2)
-                    except ValueError:
-                        new_words.add(aid.lemma2.lower())
-                
+    
+    for row in df.itertuples():
+        lemma1 = find_term(row.name)
+        print(row.name + '---->' + str(lemma1))
+        if type(lemma1) == int:
+            term = Terminology_reference.query.filter_by(tid=lemma1, cap=cap, bid=bid).first()
+            if not term:
+                new_words.add(row.name.lower())
+        else: 
+            new_words.add(row.name.lower())
+    
+    
+    for ids, phrase in enumerate(sentence):
+        for word in phrase:
+            tokens += 1
             
-    metrics['tokens'] = len(words)
+    metrics['tokens'] = tokens
     metrics['sentences'] = len(sentence)
-    metrics['entered concepts'] = len(new_words)   
+    metrics['entered concepts'] = len(new_words)  
+    print(new_words)
     words.extend(new_words)
     
     return dfAnnotation, df, metrics, words
